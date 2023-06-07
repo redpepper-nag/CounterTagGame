@@ -11,7 +11,7 @@ function App(props) {
       setHasNfc(await nfcManager.isSupported())
     }
     checkNfc();
-  }, [])
+  }, []);
 
   if (hasNfc === null) {
     return null;
