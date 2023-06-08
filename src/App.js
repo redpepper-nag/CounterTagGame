@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
-import nfcManager from "react-native-nfc-manager";
+import NfcManager from "react-native-nfc-manager";
+import Game from "./Game";
 
 function App(props) {
 
@@ -8,9 +9,9 @@ function App(props) {
 
   React.useEffect(() => {
     async function checkNfc() {
-      const supported = await nfcManager.isSupported();
+      const supported = await NfcManager.isSupported();
       if (supported) {
-        await nfcManager.start();
+        await NfcManager.start();
       }
       setHasNfc(supported);
     }
@@ -22,13 +23,11 @@ function App(props) {
   } else if (!hasNfc) {
     return (
       <View style={styles.wrapper}>
-        <Text style={styles.bad}>Your device doesn't support NFC</Text>
+        <Text>Your device doesn't support NFC</Text>
       </View>
     );
   } return (
-    <View style={styles.wrapper}>
-    <Text style={styles.good}>Hello NFC!</Text>
-  </View>
+    <Game />
   )
 
 };
@@ -39,12 +38,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  bad: {
-    color: "#f44336",
-  },
-  good: {
-    color: 'green'
-  }
 });
 
 export default App;
