@@ -8,7 +8,11 @@ function App(props) {
 
   React.useEffect(() => {
     async function checkNfc() {
-      setHasNfc(await nfcManager.isSupported())
+      const supported = await nfcManager.isSupported();
+      if (supported) {
+        await nfcManager.start();
+      }
+      setHasNfc(supported);
     }
     checkNfc();
   }, []);
@@ -18,12 +22,12 @@ function App(props) {
   } else if (!hasNfc) {
     return (
       <View style={styles.wrapper}>
-        <Text>Your device doesn't support NFC</Text>
+        <Text style={styles.bad}>Your device doesn't support NFC</Text>
       </View>
     );
   } return (
     <View style={styles.wrapper}>
-    <Text>Hello NFC!</Text>
+    <Text style={styles.good}>Hello NFC!</Text>
   </View>
   )
 
@@ -34,6 +38,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bad: {
+    color: "#f44336",
+  },
+  good: {
+    color: 'green'
   }
 });
 
