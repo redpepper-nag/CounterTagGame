@@ -1,3 +1,5 @@
+import  Ndef  from "react-native-nfc-manager/ndef-lib";
+
 const testData = {
   ndefMessage: [
     {
@@ -26,3 +28,7 @@ const testData = {
   ],
 };
 
+test('ndef', () => {
+  const decoded = Ndef.uri.decodePayload(testData.ndefMessage[0].payload);
+  expect(decoded).toEqual('https://reactnative.dev');
+})
